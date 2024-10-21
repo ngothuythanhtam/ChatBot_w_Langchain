@@ -1,7 +1,9 @@
 import streamlit as st
+from streamlit_mic_recorder import mic_recorder
 from llm_chains import load_normal_chain
 from langchain.memory import StreamlitChatMessageHistory
 from utils import save_chat_history_json, get_timestamp, load_chat_history_json
+from audio_handler import trancribe_audio
 import yaml
 import os
 
@@ -61,15 +63,31 @@ def main():
     llm_chain = load_chain(chat_history)
     user_input = st.text_input("Type your message here", key="user_input", on_change=set_send_input)
 
-    send_button = st.button("Send", key="send_button")
+    voice_recording_colums, send_button_column = st.columns(2)
+    with voice_recording_colums:
+        voice_recording = mic_recorder(
+            start_prompt="Start recording",
+            stop_prompt="Stop recording",
+            just_once=True)
+    with send_button_column:
+        send_button = st.button("Send", key="send_button", on_click=clear_input_field)
+
+    uploaded_audio = st.sidebar.file_uploader("Upload an audio file", type=["wav", "mp3"])
+    if uploaded_audio:
+        trancribed_audio = trancribe_audio(uploaded_audio.getvalue())
+        print("Transcribe audio: ", trancribed_audio)
+        llm_response = llm_chain.run("Summarize this text: " + trancribed_audio)
+
+    if voice_recording:
+        trancribed_audio = trancribe_audio(voice_recording["bytes"])
+        print("Transcribe audio: ", trancribed_audio)
+        llm_response = llm_chain.run(trancribed_audio)
+
 
     if send_button or st.session_state.send_input:
         if st.session_state.user_question != "":
-            
-            with chat_container:
-                st.chat_message("user").write(st.session_state.user_question)
-                llm_response = llm_chain.run(st.session_state.user_question)
-                st.session_state.user_question = ""
+            llm_response = llm_chain.run(st.session_state.user_question)
+            st.session_state.user_question = ""
 
     if chat_history.messages != []:
         with chat_container:
