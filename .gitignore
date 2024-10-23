@@ -3,3 +3,4 @@ models/
 __pycache__/
 cuda.py
 test_app.py
+.env
