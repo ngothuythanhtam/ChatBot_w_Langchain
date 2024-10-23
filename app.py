@@ -4,6 +4,7 @@ from llm_chains import load_normal_chain
 from langchain.memory import StreamlitChatMessageHistory
 from utils import save_chat_history_json, get_timestamp, load_chat_history_json
 from audio_handler import trancribe_audio
+from image_handler import handle_image
 import yaml
 import os
 
@@ -39,7 +40,6 @@ def main():
     chat_container = st.container()
     st.sidebar.title("Chat Sessions")
     chat_sessions = ["new_session"] + os.listdir(config["chat_history_path"])
-    print(chat_sessions)
 
     if "send_input" not in st.session_state:
         st.session_state.session_key = "new_session"
@@ -83,8 +83,21 @@ def main():
         print("Transcribe audio: ", trancribed_audio)
         llm_response = llm_chain.run(trancribed_audio)
 
+    uploaded_image = st.sidebar.file_uploader("Upload an image file", type=["jpg", "jpeg", "png"])
 
     if send_button or st.session_state.send_input:
+        if uploaded_image:
+            with st.spinner("Processing image..."):
+                user_message = "Describe this image in detail please."
+                if st.session_state.user_question != "":
+                    user_message = st.session_state.user_question
+                    st.session_state.user_question = ""
+                llm_answer = handle_image(uploaded_image.getvalue(), st.session_state.user_question)
+
+                # Save both the image and the response to the chat history
+                chat_history.add_user_message(user_message)
+                chat_history.add_ai_message(llm_answer)
+
         if st.session_state.user_question != "":
             llm_response = llm_chain.run(st.session_state.user_question)
             st.session_state.user_question = ""
