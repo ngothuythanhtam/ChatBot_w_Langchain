@@ -1,4 +1,4 @@
-chat_venv/
+myvenv/
 models/
 __pycache__/
 cuda.py
