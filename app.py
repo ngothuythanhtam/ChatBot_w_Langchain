@@ -34,9 +34,11 @@ def save_chat_history():
         else:
             save_chat_history_json(st.session_state.history, os.path.join(config["chat_history_path"] ,st.session_state.session_key))
 
-
 def main():
+    # app config
+    st.set_page_config(page_title="Multi-modal Local Chat App", page_icon="🤖")
     st.title("Multi-modal Local Chat App")
+
     chat_container = st.container()
     st.sidebar.title("Chat Sessions")
     chat_sessions = ["new_session"] + os.listdir(config["chat_history_path"])
