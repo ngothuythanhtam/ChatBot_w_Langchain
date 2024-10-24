@@ -109,8 +109,6 @@ def main():
                 st.chat_message(message.type).write(message.content)
 
     # Add a check before printing chat history
-    if len(chat_history.messages) > 0:
-        print(chat_history.messages[0].dict())
     save_chat_history()
 
 if __name__ == "__main__":
