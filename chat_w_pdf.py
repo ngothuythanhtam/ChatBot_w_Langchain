@@ -9,6 +9,7 @@ from langchain.chains import ConversationalRetrievalChain
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("Use: ", device)
 
 loader = PyPDFLoader(file_path=r"./pdfs/Bad Blood.pdf")
 data = loader.load()
@@ -19,7 +20,7 @@ text_chunks = text_splitter.split_documents(data)
 # Initialize Large Language Model for answer generation
 llm_answer_gen = LlamaCpp(
     streaming=True,
-    model_path=r"./models/mistral-7b-openorca.Q4_0.gguf",
+    model_path=r"./models/mistral-7b-openorca.Q4_K_M.gguf",
     temperature=0.75,
     top_p=1,
     f16_kv=True,
