@@ -1,9 +1,10 @@
 import torch
-from langchain.document_loaders import CSVLoader, PyPDFLoader
+from langchain_community.document_loaders import CSVLoader, PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Chroma
-from langchain.llms import LlamaCpp
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_community.llms import LlamaCpp
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 
@@ -11,8 +12,9 @@ from langchain.chains import ConversationalRetrievalChain
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Use: ", device)
 
-loader = PyPDFLoader(file_path=r"./pdfs/Bad Blood.pdf")
-data = loader.load()
+loader = PyPDFLoader(file_path=r"./pdfs/Sachin.pdf")
+if loader is not None:
+    data = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=200)
 text_chunks = text_splitter.split_documents(data)
@@ -42,10 +44,9 @@ answer_gen_chain = ConversationalRetrievalChain.from_llm(llm=llm_answer_gen, ret
 while True:
 
     user_input = input("Enter a question: ")
-    if user_input.lower() == 'q':
-        break
+    if user_input is not None or user_input.lower() != 'q':
+        # Run question generation chain
+        answers = answer_gen_chain.run({"question": user_input})
 
-    # Run question generation chain
-    answers = answer_gen_chain.run({"question": user_input})
-
-    print("Answer: ", answers)
+        print("Answer: ", answers)
+    else: break
