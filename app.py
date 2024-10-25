@@ -3,7 +3,7 @@ from streamlit_mic_recorder import mic_recorder
 from llm_chains import load_normal_chain
 from langchain.memory import StreamlitChatMessageHistory
 from utils import save_chat_history_json, get_timestamp, load_chat_history_json
-from audio_handler import trancribe_audio
+from audio_handler import transcribe_audio
 from image_handler import handle_image
 import yaml
 import os
@@ -76,12 +76,12 @@ def main():
 
     uploaded_audio = st.sidebar.file_uploader("Upload an audio file", type=["wav", "mp3"])
     if uploaded_audio:
-        trancribed_audio = trancribe_audio(uploaded_audio.getvalue())
+        trancribed_audio = transcribe_audio(uploaded_audio.getvalue())
         print("Transcribe audio: ", trancribed_audio)
         llm_response = llm_chain.run("Summarize this text: " + trancribed_audio)
 
     if voice_recording:
-        trancribed_audio = trancribe_audio(voice_recording["bytes"])
+        trancribed_audio = transcribe_audio(voice_recording["bytes"])
         print("Transcribe audio: ", trancribed_audio)
         llm_response = llm_chain.run(trancribed_audio)
 

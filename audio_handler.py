@@ -9,7 +9,7 @@ def convert_bytes_to_array(audio_bytes):
     print(sample_rate)
     return audio
 
-def trancribe_audio(audio_bytes):
+def transcribe_audio(audio_bytes):
     # Check if GPU is available
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Using device: {device}")
