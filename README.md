@@ -36,8 +36,8 @@ To set up this project, please follow these steps:
 
 1. **Clone the repository**:
    ```shell
-   git clone https://github.com/your-repo/chatbot-langchain.git
-   cd chatbot-langchain
+   git clone https://github.com/ngothuythanhtam/ChatBot_w_Langchain.git
+   cd ChatBot_w_Langchain
    ```
 2. **Updating...**
 
