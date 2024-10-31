@@ -73,10 +73,11 @@ def main():
     chat_history = StreamlitChatMessageHistory(key = "history")
 
     # llm_chain = load_chain(chat_history)
-    user_input = st.text_input("Type your message here", key="user_input", on_change=set_send_input)
+    
 
     # Audio handler
     chat_container = st.container()
+    user_input = st.text_input("Type your message here", key="user_input", on_change=set_send_input)
 
     send_button = st.button("Send", key="send_button", on_click=clear_input_field)
 
@@ -88,7 +89,7 @@ def main():
     if uploaded_audio:
         transcribed_audio = transcribe_audio(uploaded_audio.getvalue())
         print(transcribed_audio)
-        llm_chain = load_chain(chat_history)
+        # llm_chain = load_chain(chat_history)
         llm_chain.run("Summarize this text: " + transcribed_audio)
 
     if uploaded_pdf:
@@ -117,7 +118,7 @@ def main():
     if chat_history.messages != []:
         with chat_container:
             st.write("Chat History:")
-            for message in reversed(chat_history.messages):
+            for message in chat_history.messages:
                 st.chat_message(message.type).write(message.content)
                 # if message.type == "human":
                 #     st.write(get_user_template(message.content), unsafe_allow_html=True)
