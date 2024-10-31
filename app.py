@@ -1,10 +1,10 @@
 import streamlit as st
-from streamlit_mic_recorder import mic_recorder
 from llm_chains import load_normal_chain
 from langchain.memory import StreamlitChatMessageHistory
 from utils import save_chat_history_json, get_timestamp, load_chat_history_json
-from audio_handler import transcribe_audio
 from image_handler import handle_image
+from audio_handler import transcribe_audio
+from html_templates import get_bot_template, get_user_template, css
 import yaml
 import os
 
@@ -15,8 +15,9 @@ def load_chain(chat_history):
     return load_normal_chain(chat_history)
 
 def clear_input_field():
-    st.session_state.user_question=st.session_state.user_input
-    st.session_state.user_input=""
+    if st.session_state.user_question == "":
+        st.session_state.user_question = st.session_state.user_input
+        st.session_state.user_input = ""
 
 def set_send_input():
     st.session_state.send_input=True
@@ -38,8 +39,9 @@ def main():
     # app config
     st.set_page_config(page_title="Multi-modal Local Chat App", page_icon="🤖")
     st.title("Multi-modal Local Chat App")
+    st.write(css, unsafe_allow_html=True)
 
-    chat_container = st.container()
+    # chat_container = st.container()
     st.sidebar.title("Chat Sessions")
     chat_sessions = ["new_session"] + os.listdir(config["chat_history_path"])
 
@@ -62,31 +64,24 @@ def main():
         st.session_state.history = []
 
     chat_history = StreamlitChatMessageHistory(key = "history")
+
     llm_chain = load_chain(chat_history)
     user_input = st.text_input("Type your message here", key="user_input", on_change=set_send_input)
 
-    voice_recording_colums, send_button_column = st.columns(2)
-    with voice_recording_colums:
-        voice_recording = mic_recorder(
-            start_prompt="Start recording",
-            stop_prompt="Stop recording",
-            just_once=True)
-    with send_button_column:
-        send_button = st.button("Send", key="send_button", on_click=clear_input_field)
+    # Audio and voice recording handler
+    chat_container = st.container()
+
+    send_button = st.button("Send", key="send_button", on_click=clear_input_field)
 
     uploaded_audio = st.sidebar.file_uploader("Upload an audio file", type=["wav", "mp3"])
     if uploaded_audio:
-        trancribed_audio = transcribe_audio(uploaded_audio.getvalue())
-        print("Transcribe audio: ", trancribed_audio)
-        llm_response = llm_chain.run("Summarize this text: " + trancribed_audio)
+        transcribed_audio = transcribe_audio(uploaded_audio.getvalue())
+        print(transcribed_audio)
+        llm_chain = load_chain(chat_history)
+        llm_chain.run("Summarize this text: " + transcribed_audio)
 
-    if voice_recording:
-        trancribed_audio = transcribe_audio(voice_recording["bytes"])
-        print("Transcribe audio: ", trancribed_audio)
-        llm_response = llm_chain.run(trancribed_audio)
-
+    # Image handler
     uploaded_image = st.sidebar.file_uploader("Upload an image file", type=["jpg", "jpeg", "png"])
-
     if send_button or st.session_state.send_input:
         if uploaded_image:
             with st.spinner("Processing image..."):
@@ -101,14 +96,19 @@ def main():
                 chat_history.add_ai_message(llm_answer)
 
         if st.session_state.user_question != "":
+            llm_chain = load_chain(chat_history)
             llm_response = llm_chain.run(st.session_state.user_question)
             st.session_state.user_question = ""
+        st.session_state.send_input = False
 
     if chat_history.messages != []:
         with chat_container:
             st.write("Chat History:")
-            for message in chat_history.messages:
-                st.chat_message(message.type).write(message.content)
+            for message in reversed(chat_history.messages):
+                if message.type == "human":
+                    st.write(get_user_template(message.content), unsafe_allow_html=True)
+                else:
+                    st.write(get_bot_template(message.content), unsafe_allow_html=True)
 
     # Add a check before printing chat history
     save_chat_history()
