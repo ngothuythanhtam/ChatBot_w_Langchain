@@ -1,10 +1,10 @@
 from prompt_templates import memory_prompt_template
 from langchain.chains import StuffDocumentsChain, LLMChain, ConversationalRetrievalChain
-from langchain.embeddings import HuggingFaceInstructEmbeddings
+from langchain_community.embeddings import HuggingFaceInstructEmbeddings
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.prompts import PromptTemplate
-from langchain.llms import ctransformers
-from langchain.llms import CTransformers
+from langchain_community.llms import ctransformers
+from langchain_community.llms import CTransformers
 from ctransformers import AutoModelForCausalLM
 from langchain.vectorstores import chroma
 import chromadb

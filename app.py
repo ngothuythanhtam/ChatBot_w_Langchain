@@ -1,6 +1,6 @@
 import streamlit as st
 from llm_chains import load_normal_chain
-from langchain.memory import StreamlitChatMessageHistory
+from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 from utils import save_chat_history_json, get_timestamp, load_chat_history_json
 from image_handler import handle_image
 from audio_handler import transcribe_audio
