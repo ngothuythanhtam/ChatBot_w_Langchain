@@ -1,9 +1,10 @@
 import streamlit as st
-from llm_chains import load_normal_chain
+from llm_chains import load_normal_chain, load_pdf_chat_chain
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 from utils import save_chat_history_json, get_timestamp, load_chat_history_json
 from image_handler import handle_image
 from audio_handler import transcribe_audio
+from pdf_handler import add_documents_to_db
 from html_templates import get_bot_template, get_user_template, css
 import yaml
 import os
@@ -12,6 +13,9 @@ with open ("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 def load_chain(chat_history):
+    if st.session_state.pdf_chat:
+        print("loading pdf chat chain")
+        return load_pdf_chat_chain(chat_history)
     return load_normal_chain(chat_history)
 
 def clear_input_field():
@@ -35,11 +39,13 @@ def save_chat_history():
         else:
             save_chat_history_json(st.session_state.history, os.path.join(config["chat_history_path"] ,st.session_state.session_key))
 
+def toggle_pdf_chat():
+    st.session_state.pdf_chat = True
+
 def main():
     # app config
     st.set_page_config(page_title="Multi-modal Local Chat App", page_icon="🤖")
     st.title("Multi-modal Local Chat App")
-    st.write(css, unsafe_allow_html=True)
 
     # chat_container = st.container()
     st.sidebar.title("Chat Sessions")
@@ -57,6 +63,7 @@ def main():
 
     index = chat_sessions.index(st.session_state.session_index_tracker)
     st.sidebar.selectbox("Select a chat session", chat_sessions, key="session_key", index=index, on_change=track_index)
+    st.sidebar.toggle("PDF Chat", key="pdf_chat", value=False)
 
     if st.session_state.session_key != "new_session":
         st.session_state.history = load_chat_history_json(config["chat_history_path"]+ "/" + st.session_state.session_key)
@@ -65,23 +72,29 @@ def main():
 
     chat_history = StreamlitChatMessageHistory(key = "history")
 
-    llm_chain = load_chain(chat_history)
+    # llm_chain = load_chain(chat_history)
     user_input = st.text_input("Type your message here", key="user_input", on_change=set_send_input)
 
-    # Audio and voice recording handler
+    # Audio handler
     chat_container = st.container()
 
     send_button = st.button("Send", key="send_button", on_click=clear_input_field)
 
     uploaded_audio = st.sidebar.file_uploader("Upload an audio file", type=["wav", "mp3"])
+    # Image handler
+    uploaded_image = st.sidebar.file_uploader("Upload an image file", type=["jpg", "jpeg", "png"])
+    uploaded_pdf = st.sidebar.file_uploader("Upload a pdf file", accept_multiple_files=True, key="pdf_upload", type=["pdf"], on_change=toggle_pdf_chat)
+
     if uploaded_audio:
         transcribed_audio = transcribe_audio(uploaded_audio.getvalue())
         print(transcribed_audio)
         llm_chain = load_chain(chat_history)
         llm_chain.run("Summarize this text: " + transcribed_audio)
 
-    # Image handler
-    uploaded_image = st.sidebar.file_uploader("Upload an image file", type=["jpg", "jpeg", "png"])
+    if uploaded_pdf:
+        with st.spinner("Processing pdf..."):
+            add_documents_to_db(uploaded_pdf)
+
     if send_button or st.session_state.send_input:
         if uploaded_image:
             with st.spinner("Processing image..."):
@@ -105,10 +118,11 @@ def main():
         with chat_container:
             st.write("Chat History:")
             for message in reversed(chat_history.messages):
-                if message.type == "human":
-                    st.write(get_user_template(message.content), unsafe_allow_html=True)
-                else:
-                    st.write(get_bot_template(message.content), unsafe_allow_html=True)
+                st.chat_message(message.type).write(message.content)
+                # if message.type == "human":
+                #     st.write(get_user_template(message.content), unsafe_allow_html=True)
+                # else:
+                #     st.write(get_bot_template(message.content), unsafe_allow_html=True)
 
     # Add a check before printing chat history
     save_chat_history()
