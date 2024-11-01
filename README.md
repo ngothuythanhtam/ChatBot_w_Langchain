@@ -39,6 +39,19 @@ To set up this project, please follow these steps:
    git clone https://github.com/ngothuythanhtam/ChatBot_w_Langchain.git
    cd ChatBot_w_Langchain
    ```
-2. **Updating...**
+2. **Create Virtual Environment**
+   ```shell
+   python -m venv ChatVenv
+   ChatVenv/Scripts/activate
+   ```
+   Then, you need to install the requirement packages in setup.txt by runing command:
+   ```shell
+   python -r setup.txt
+   ```
+
+   If you want to install PyTorch with CUDA, check your cuda version first then find the compatibile PyTorch CUDA version. (I use CUDA 12.1)
+   ```shell
+   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+   ```
 
 **Ngo Thuy Thanh Tam**
