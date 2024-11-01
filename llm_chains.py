@@ -1,16 +1,13 @@
 from prompt_templates import memory_prompt_template
-from langchain.chains import StuffDocumentsChain, LLMChain, ConversationalRetrievalChain
+from langchain.chains import LLMChain
 from langchain.chains.retrieval_qa.base import RetrievalQA
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.prompts import PromptTemplate
-from langchain_community.llms import ctransformers
 from langchain_community.llms import CTransformers
-from ctransformers import AutoModelForCausalLM
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
 import chromadb
 import yaml
-from langchain.embeddings import HuggingFaceEmbeddings
-
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
@@ -35,13 +32,11 @@ def load_normal_chain(chat_history):
 
 def load_vectordb(embeddings):
     persistent_client = chromadb.PersistentClient("chroma_db")
-
     langchain_chroma = Chroma(
         client=persistent_client,
         collection_name="pdfs",
         embedding_function=embeddings,
     )
-
     return langchain_chroma
 
 def load_pdf_chat_chain(chat_history):
@@ -56,7 +51,6 @@ class pdfChatChain:
         self.memory = create_chat_memory(chat_history)
         self.vector_db = load_vectordb(create_embeddings())
         llm = create_llm()
-        #chat_prompt = create_prompt_from_template(memory_prompt_template)
         self.llm_chain = load_retrieval_chain(llm, self.memory, self.vector_db)
 
     def run(self, user_input):
