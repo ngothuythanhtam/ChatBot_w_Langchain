@@ -46,6 +46,7 @@ def main():
     # app config
     st.set_page_config(page_title="Multi-modal Local Chat App", page_icon="🤖")
     st.title("Multi-modal Local Chat App")
+    st.write(css, unsafe_allow_html=True)
 
     # chat_container = st.container()
     st.sidebar.title("Chat Sessions")
@@ -72,7 +73,7 @@ def main():
 
     chat_history = StreamlitChatMessageHistory(key = "history")
 
-    # llm_chain = load_chain(chat_history)
+    llm_chain = load_chain(chat_history)
     
 
     # Audio handler
@@ -119,11 +120,11 @@ def main():
         with chat_container:
             st.write("Chat History:")
             for message in chat_history.messages:
-                st.chat_message(message.type).write(message.content)
-                # if message.type == "human":
-                #     st.write(get_user_template(message.content), unsafe_allow_html=True)
-                # else:
-                #     st.write(get_bot_template(message.content), unsafe_allow_html=True)
+                # st.chat_message(message.type).write(message.content)
+                if message.type == "human":
+                    st.write(get_user_template(message.content), unsafe_allow_html=True)
+                else:
+                    st.write(get_bot_template(message.content), unsafe_allow_html=True)
 
     # Add a check before printing chat history
     save_chat_history()
