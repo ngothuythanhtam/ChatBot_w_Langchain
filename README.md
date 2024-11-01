@@ -46,7 +46,7 @@ To set up this project, please follow these steps:
    ```
    Then, you need to install the requirement packages in setup.txt by runing command:
    ```shell
-   python -r setup.txt
+   pip install -r setup.txt
    ```
 
    If you want to install PyTorch with CUDA, check your cuda version first then find the compatibile PyTorch CUDA version. (I use CUDA 12.1)
