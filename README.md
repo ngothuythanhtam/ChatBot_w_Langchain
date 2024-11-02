@@ -34,12 +34,16 @@ Welcome to the **ChatBot with LangChain**! This project leverages **LangChain**,
 
 To set up this project, please follow these steps:
 
-1. **Clone the repository**:
+1. **Install Python**
+   Recommend Python <3.12 and >=3.9
+   My Python version is 3.9.6
+
+2. **Clone the repository**:
    ```shell
    git clone https://github.com/ngothuythanhtam/ChatBot_w_Langchain.git
    cd ChatBot_w_Langchain
    ```
-2. **Create Virtual Environment**
+3. **Create Virtual Environment**
    ```shell
    python -m venv ChatVenv
    ChatVenv/Scripts/activate
@@ -54,5 +58,7 @@ To set up this project, please follow these steps:
    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
    ```
    For more infomation (https://gist.github.com/Hansimov/c2c82c9512245758398bc8b48c2789c0)
+
+4. **Updating**
 
 **Ngo Thuy Thanh Tam**
