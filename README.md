@@ -36,8 +36,7 @@ To set up this project, please follow these steps:
 
 1. **Install Python**
 
-   Recommend Python <3.12 and >=3.9
-   My Python version is 3.9.6
+   Recommend Python <3.12 and >=3.9 (I use Python 3.9.6)
 
 2. **Clone the repository**:
    ```shell
