@@ -15,8 +15,6 @@ Welcome to the **ChatBot with LangChain**! This project leverages **LangChain**,
 ### 1. Audio Processing
 
 - Transcribes audio files (e.g., `.wav`, `.mp3`) using **OpenAI Whisper**.
-- Converts spoken content into text for easy querying.
-- Detects and translates different languages, providing multilingual support.
 
 ### 2. Image Processing
 
@@ -28,7 +26,6 @@ Welcome to the **ChatBot with LangChain**! This project leverages **LangChain**,
 
 - Processes multi-page PDFs, extracting text from each page.
 - Splits large documents into manageable chunks for efficient searching and querying.
-- Perfect for handling articles, research papers, and other text-heavy documents.
 
 ## Setup and Installation
 
