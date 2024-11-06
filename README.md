@@ -56,6 +56,10 @@ To set up this project, please follow these steps:
    ```
    For more infomation (https://gist.github.com/Hansimov/c2c82c9512245758398bc8b48c2789c0)
 
-4. **Updating**
+4. **Install Moddels**
+![Install these models via HuggingFace (link below)](image.png)
+[HuggingFace](https://huggingface.co/)
+
+5. **Updating**
 
 **Ngo Thuy Thanh Tam**
