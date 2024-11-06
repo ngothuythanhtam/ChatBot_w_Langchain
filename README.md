@@ -57,7 +57,10 @@ To set up this project, please follow these steps:
    [Click here more infomation](https://gist.github.com/Hansimov/c2c82c9512245758398bc8b48c2789c0)
 
 4. **Install Models**
-![Install these models via HuggingFace (link below)](image.png)
+![Install these models via HuggingFace (link below)]
+
+(image.png)
+
 [HuggingFace](https://huggingface.co/)
 
 5. **Updating**
