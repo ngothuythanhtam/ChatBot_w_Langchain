@@ -60,7 +60,7 @@ To set up this project, please follow these steps:
    ```shell
    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
    ```
-   [Click here more infomation](https://gist.github.com/Hansimov/c2c82c9512245758398bc8b48c2789c0)
+   [Click here for more infomation](https://gist.github.com/Hansimov/c2c82c9512245758398bc8b48c2789c0)
 
 4. **Install Models** via   [HuggingFace](https://huggingface.co/)
 
