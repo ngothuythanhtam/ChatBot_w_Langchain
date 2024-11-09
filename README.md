@@ -62,4 +62,4 @@ To set up this project, please follow these steps:
 
 5. **Updating**
 
-**Ngo Thuy Thanh Tam**
+**Reference from some tutorials on Youtube**
