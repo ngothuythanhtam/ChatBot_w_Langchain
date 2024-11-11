@@ -66,6 +66,10 @@ To set up this project, please follow these steps:
 
    ![Install these models via HuggingFace (link below)](image.png) 
 
+## Usage
+
+You can try to experience both of these chatbot
+
 5. **Updating**
 
 **Reference from some tutorials on Youtube**
