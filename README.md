@@ -70,6 +70,10 @@ To set up this project, please follow these steps:
 
 You can try to experience both of these chatbot
 
+## File Structure
+
+## Dependencies
+
 5. **Updating**
 
 
