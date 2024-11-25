@@ -79,7 +79,7 @@ You can try to experience both of these chatbot
 ### Saving and Continuing Sessions
 
 1. Start a conversation, and the chatbot will automatically save the session in a `sessions` folder as a JSON file.
-2. To continue a previous session, load the relevant JSON file before initiating the chat by selecting the session from the drop box.
+2. To continue a previous session, load the relevant JSON file before initiating the chat by selecting the session from the drop-down list.
 
 ## File Structure
 
