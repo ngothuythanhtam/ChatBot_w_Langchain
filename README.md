@@ -33,6 +33,12 @@ After testing, I've found that the first chatbot has a slower response speed com
 - Processes multi-page PDFs, extracting text from each page.
 - Splits large documents into manageable chunks for efficient searching and querying.
 
+### 4. Session Saving
+
+- Stores user conversations in JSON format.
+- Allows users to revisit and continue previous interactions seamlessly.
+- Ensures conversational context is maintained across sessions.
+
 ## Setup and Installation
 
 To set up this project, please follow these steps:
@@ -69,6 +75,11 @@ To set up this project, please follow these steps:
 ## Usage
 
 You can try to experience both of these chatbot
+
+### Saving and Continuing Sessions
+
+1. Start a conversation, and the chatbot will automatically save the session in a `sessions` folder as a JSON file.
+2. To continue a previous session, load the relevant JSON file before initiating the chat by selecting the session from the drop box.
 
 ## File Structure
 
