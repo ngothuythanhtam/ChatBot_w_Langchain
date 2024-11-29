@@ -1,0 +1,29 @@
+1.Question: Who produced the audio program?
+Answer: The audio program was produced by YBM.
+
+2.Question: How long does the entire listening test last?
+Answer: The entire listening test lasts approximately 45 minutes.
+
+3.Question: How many parts are included in the listening test?
+Answer: There are four parts in the listening test.
+
+4.Question: What is the task when listening to statements about a picture?
+Answer: You must select the statement that best describes what you see in the picture.
+
+5.Question: Where should you mark your answers during the test?
+Answer: You should mark your answers on the answer sheet.
+
+6.Question: What does the phrase "March comes in like a lion and goes out like a lamb" mean?
+Answer: It means that March usually begins with cold and sometimes stormy weather but ends with milder and better weather.
+
+7.Question: Which month is described as the "rainy month"?
+Answer: April is described as the rainy month.
+
+8.Question: What is significant about the month of June?
+Answer: June is usually warm, and many people get married during this month.
+
+9.Question: What happens in September according to the text?
+Answer: In September, people go back to school, and the autumn winds begin to blow.
+
+10.Question: Why is December referred to as the "Christmas month"?
+Answer: December is referred to as the "Christmas month" because people do a lot of Christmas shopping and spend time preparing for Christmas.

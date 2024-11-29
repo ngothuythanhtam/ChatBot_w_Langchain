@@ -129,8 +129,8 @@ def main():
                 })
 
                 # Save both the image and the response to the chat history
-                chat_history.add_user_message(f"[{st.session_state.input_timestamp}] {st.session_state.user_message}")
-                chat_history.add_ai_message(f"[{get_formatted_timestamp()}]{llm_answer}")
+                chat_history.add_user_message(user_message)
+                chat_history.add_ai_message(llm_answer)
 
         if st.session_state.user_question != "":
             llm_chain = load_chain(chat_history)
