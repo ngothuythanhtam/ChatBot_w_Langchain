@@ -85,6 +85,6 @@ You can try to experience both of these chatbot
 
 ## Dependencies
 
-5. **Updating**
+**Updating**
 
 
