@@ -2,11 +2,10 @@
 
 Welcome to the **ChatBot with LangChain**! This project leverages **LangChain**, **OpenAI's Whisper**, and other advanced AI tools to build a versatile chatbot capable of understanding and processing text, audio, image, and PDF inputs. Ideal for users needing a flexible assistant for diverse content types. In this repository, I've created two chatbots for testing:
 
-First Chatbot (chatPDF.py): This chatbot is designed specifically for querying PDFs and providing answers based on the document content.
+First Chatbot ```(chatPDF.py)```: This chatbot is designed specifically for querying PDFs and providing answers based on the document content. 
+→ Answer the question from PDF faster.
 
 Second Chatbot: This chatbot integrates three features: Audio Processing, Image Processing, and PDF Processing (explained below).
-
-After testing, I've found that the first chatbot has a slower response speed compared to the second one.
 
 ## Table of Contents
 
